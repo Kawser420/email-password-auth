@@ -1,4 +1,8 @@
 import React, { useState } from 'react';
+import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
+import app from '../../firebase/firebase.config';
+
+const auth = getAuth(app)
 
 const Resister = () => {
     const [email, setEmail] = useState('');
@@ -8,6 +12,16 @@ const Resister = () => {
         const email = event.target.email.value;
         const password = event.target.password.value;
         console.log(email, password)
+
+        // email password 
+        createUserWithEmailAndPassword(auth, email, password)
+        .then(result => {
+            const loggedUser = result.user;
+            console.log(loggedUser);
+        })
+        .catch(error => {
+            console.log(error);
+        })
     }
 
     const handleEmailChange = (event) => {
